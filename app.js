@@ -33,16 +33,7 @@
 // });
 
 
-// var str = "Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name?>";
-// var str_arr = str.split(/(<\?.*?\?>)/);
-// console.log(str_arr)
 
-// let result = ''
-// let js_code = ''
-
-// for (let i = 0; i < str_arr.length; i += 1) {
-//     if str_arr[i] 
-// }
 
 
 const query = {
@@ -52,9 +43,9 @@ const query = {
 
 
 
-let str1 = query.template
-str1 = str1.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
-let str1_list = str1.split(/(<\?.*?\?>)/)
+let template = query.template
+template = template.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
+let str1_list = template.split(/(<\?.*?\?>)/)
 let code = str1_list[1].replace(/<\? /g, '').replace(/ \?>/g, '')
 
 const parseCode = (code) => {
@@ -67,6 +58,28 @@ const parseCode = (code) => {
 }
 
 
+// console.log(str1_list)
+// console.log(parseCode(code))
 
-console.log(parseCode(code))
+function parseQuery (query) {
+    template = query.template
+    template = template.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
+    let templateList = template.split(/(<\?.*?\?>)/)
+    let resultList = []
+    for (let i = 0; i < templateList.length; i += 1) {
+        if (templateList[i].startsWith('<? ')) {
+            let code = templateList[i].replace(/<\? /g, '').replace(/ \?>/g, '')
+            resultList.push(parseCode(code))
+        }
+        else if (templateList[i].startsWith('<?= ')) {
+            let code = templateList[i].replace(/<\?\= /g, '').replace(/\?>/g, '')
+            resultList.push(parseCode(code))
+        }
+        else {
+            resultList.push(templateList[i])
+        }
+    }
+    return resultList.join('')
+};
 
+console.log(parseQuery(query))
