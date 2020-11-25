@@ -51,29 +51,63 @@ let code = str1_list[1].replace(/<\? /g, '').replace(/ \?>/g, '')
 const parseCode = (code) => {
     Object.entries(query.substitutions).forEach(([key, val]) => {
         // console.log(`${key}: ${val}`);
-        code = `const ${key} = '${val}';` + code;
+        code = `const ${key} = '${val}'; ` + code;
     });
+    code = 'let result = []; ' + code + '; result'
     
     return eval(code)
 }
 
+const parseVariable = (variable) => {
+    Object.entries(query.substitutions).forEach(([key, val]) => {
+        // console.log(`${key}: ${val}`);
+        variable = `const ${key} = '${val}'; ` + variable;
+    });
+    
+    return eval(variable)
+}
 
 // console.log(str1_list)
 // console.log(parseCode(code))
 
+// function parseQuery (query) {
+//     template = query.template
+//     template = template.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
+//     let templateList = template.split(/(<\?.*?\?>)/)
+//     let resultList = []
+//     for (let i = 0; i < templateList.length; i += 1) {
+//         if (templateList[i].startsWith('<? ')) {
+//             let code = templateList[i].replace(/<\? /g, '').replace(/ \?>/g, '')
+//             resultList.push(parseCode(code))
+//         }
+//         else if (templateList[i].startsWith('<?= ')) {
+//             let code = templateList[i].replace(/<\?\= /g, '').replace(/\?>/g, '')
+//             resultList.push(parseCode(code))
+//         }
+//         else {
+//             resultList.push(templateList[i])
+//         }
+//     }
+//     return resultList.join('')
+// };
+
+
 function parseQuery (query) {
     template = query.template
-    template = template.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
+    template = template.replace(/\{ \?>/g, '{ result.push("').replace(/<\? }/g, '") }')
+    console.log(template)
     let templateList = template.split(/(<\?.*?\?>)/)
     let resultList = []
     for (let i = 0; i < templateList.length; i += 1) {
         if (templateList[i].startsWith('<? ')) {
             let code = templateList[i].replace(/<\? /g, '').replace(/ \?>/g, '')
+            console.log(code)
             resultList.push(parseCode(code))
+            console.log(code)
         }
         else if (templateList[i].startsWith('<?= ')) {
-            let code = templateList[i].replace(/<\?\= /g, '').replace(/\?>/g, '')
-            resultList.push(parseCode(code))
+            let variable = templateList[i].replace(/<\?\= /g, '').replace(/\?>/g, '')
+            resultList.push(parseVariable(variable))
         }
         else {
             resultList.push(templateList[i])
