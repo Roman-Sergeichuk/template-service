@@ -34,7 +34,9 @@
 
 
 
-
+"<? for (let i = 0; i < 5; i++) { ?>Gleb<? + i } ?>"
+"Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name?>"
+"<? for (let i = 0; i < 5; i++) { ?>line<? } ?>Hello<? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name?>"
 
 const query = {
     "template": "Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name?>",
@@ -45,6 +47,7 @@ const query = {
 
 let template = query.template
 template = template.replace(/\{ \?>/g, '{ "').replace(/<\? }/g, '" }')
+console.log(template)
 let str1_list = template.split(/(<\?.*?\?>)/)
 let code = str1_list[1].replace(/<\? /g, '').replace(/ \?>/g, '')
 
@@ -95,15 +98,12 @@ const parseVariable = (variable) => {
 function parseQuery (query) {
     template = query.template
     template = template.replace(/\{ \?>/g, '{ result.push("').replace(/<\? }/g, '") }')
-    console.log(template)
     let templateList = template.split(/(<\?.*?\?>)/)
     let resultList = []
     for (let i = 0; i < templateList.length; i += 1) {
         if (templateList[i].startsWith('<? ')) {
             let code = templateList[i].replace(/<\? /g, '').replace(/ \?>/g, '')
-            console.log(code)
             resultList.push(parseCode(code))
-            console.log(code)
         }
         else if (templateList[i].startsWith('<?= ')) {
             let variable = templateList[i].replace(/<\?\= /g, '').replace(/\?>/g, '')
