@@ -46,7 +46,6 @@ export function parseQuery (query) {
                 code = ''
             }
         }
-
         else if (code && ! code.endsWith('}')) {
             code += `"${tmpltList[i]}"`
         }
