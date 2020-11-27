@@ -1,20 +1,17 @@
 const parseCode = (code, query) => {
+    let dynVars = []
     Object.entries(query.substitutions).forEach(([key, val]) => {
-        // console.log(`${key}: ${val}`);
-        code = `const ${key} = '${val}'; ` + code;
+        code = `let ${key} = query.substitutions.${key}; ` + code;
     });
-    code = 'let result = []; ' + code + '; result'
-    console.log(code)
-    
+    code = 'let result = []; ' + code + '; result.join(", ")'
     return eval(code)
+
 }
 
 const parseVariable = (variable, query) => {
     Object.entries(query.substitutions).forEach(([key, val]) => {
-        // console.log(`${key}: ${val}`);
-        variable = `const ${key} = '${val}'; ` + variable;
+        variable = `let ${key} = query.substitutions.${key}; ` + variable;
     });
-    
     return eval(variable)
 }
 
@@ -34,7 +31,12 @@ export function parseQuery (query) {
         if (substitutionString) {
             code += substitutionString[1]
             // console.log(code)
-            resList.push(parseVariable(code, query))
+            try {
+                resList.push(parseVariable(code, query))
+            }
+            catch (e) {
+                return 'An error occurred while parsing the template'
+            }
             code = ''
         }
         else if (codeString) {
@@ -42,7 +44,12 @@ export function parseQuery (query) {
             if (code.endsWith('}')) {
                 code = code.replace(/{/g, '{ result.push(').replace(/}/g, ') }')
                 // console.log(parseVariable(code))
-                resList.push(parseCode(code, query))
+                try {
+                    resList.push(parseCode(code, query))
+                }
+                catch (e) {
+                    return 'An error occurred while parsing the template'
+                }
                 code = ''
             }
         }

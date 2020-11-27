@@ -16,7 +16,7 @@ app.post('/render', (req, res) => {
   }
   
   const query = req.body
-  
+
 
   // Put here template parser - function
   // Sent error message if parser can't parse the template
