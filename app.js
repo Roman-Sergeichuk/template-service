@@ -21,10 +21,16 @@ app.post('/render', (req, res) => {
   // Put here template parser - function
   // Sent error message if parser can't parse the template
   //  Add tests
-
-  return res.status(200).send({
-    result: parseQuery(req.body)
-  })
+  try {
+    return res.status(200).send({
+      result: parseQuery(req.body)
+    })
+  }
+  catch (e) {
+    return res.status(400).send({
+        result: 'An error occurred while parsing the template'
+    })
+  }
 });
 
 const PORT = 3000;

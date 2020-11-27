@@ -31,12 +31,7 @@ export function parseQuery (query) {
         if (substitutionString) {
             code += substitutionString[1]
             // console.log(code)
-            try {
-                resList.push(parseVariable(code, query))
-            }
-            catch (e) {
-                return 'An error occurred while parsing the template'
-            }
+            resList.push(parseVariable(code, query))
             code = ''
         }
         else if (codeString) {
@@ -44,12 +39,7 @@ export function parseQuery (query) {
             if (code.endsWith('}')) {
                 code = code.replace(/{/g, '{ result.push(').replace(/}/g, ') }')
                 // console.log(parseVariable(code))
-                try {
-                    resList.push(parseCode(code, query))
-                }
-                catch (e) {
-                    return 'An error occurred while parsing the template'
-                }
+                resList.push(parseCode(code, query))
                 code = ''
             }
         }
