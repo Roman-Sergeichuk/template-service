@@ -4,7 +4,7 @@
   "description": "A node.js web service that renders text templates with JavaScript inserts.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha *.test.js"
   },
   "type": "module",
   "author": "Roman-Sergeichuk",
@@ -12,5 +12,9 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mocha": "^8.2.1",
+    "supertest": "^6.0.1"
   }
 }
