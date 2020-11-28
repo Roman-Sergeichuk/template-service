@@ -21,14 +21,17 @@ const addString2Result = (result, string) => {
 
 const parseCodeString = (code, query) => {
   code = code.replace('{', '{ result.push(').replace('}', ') }')
-  Object.keys(query.substitutions).forEach(key => {
-    code = `let ${key} = query.substitutions.${key}; ${code}`;
-  });
+  if (query.substitutions) {
+    Object.keys(query.substitutions).forEach(key => {
+      code = `let ${key} = query.substitutions.${key}; ${code}`;
+    });
+  }
   code = `
           let result = [];
           ${code};
           result.join(", ")
-          `
+        `
+  console.log(code)
     return eval(code)
 
 }
@@ -43,20 +46,20 @@ const parseVariableString = (variable, query) => {
 
 
 export function parseTemplate (query) {
-  const tmpl = query.template
-  let splittedTemplate = tmpl.split(PLACEHOLDERS)
+  const template = query.template
+  const splittedTemplate = template.split(PLACEHOLDERS)
   let result = []
   let code = ''
   for (let i = 0; i < splittedTemplate.length; i += 1) {
-    let codeString = CODE_REGEX.exec(splittedTemplate[i])
-    let substitutionString = VARIABLE_REGEX.exec(splittedTemplate[i])
-    if (substitutionString) {
-      code += substitutionString[1]
+    let matchCode = CODE_REGEX.exec(splittedTemplate[i])
+    let matchVariable = VARIABLE_REGEX.exec(splittedTemplate[i])
+    if (matchVariable) {
+      code += matchVariable[1]
       result.push(parseVariableString(code, query))
       code = ''
     }
-    else if (codeString) {
-      code += codeString[1]
+    else if (matchCode) {
+      code += matchCode[1]
       if (code.endsWith('}')) {
         result.push(parseCodeString(code, query))
         code = ''

@@ -5,13 +5,12 @@
 
 
 {
-    "template": "<? for (let i = 0; i < 5; i++) { ?> Gleb <? + i ?> <? } ?>",
-    "substitutions": {"last_name": "Doe", "gender": "male"}
+    "template": "<? for (let i = 0; i < 5; i++) { ?> Gleb <? + i } ?>",
 }
 
 
 {
-    "template": "<? for (let i = 0; i < 5; i++) { ?> line - <? = i ?> <? } ?> Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name?>",
+    "template": "<? for (let i = 0; i < 5; i++) { ?> line - <? + i } ?> Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name ?>",
     "substitutions": {"last_name": "Doe", "gender": "male"}
 }
 
