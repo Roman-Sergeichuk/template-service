@@ -31,7 +31,6 @@ const parseCodeString = (code, query) => {
           ${code};
           result.join(", ")
         `
-  console.log(code)
     return eval(code)
 
 }

@@ -24,7 +24,7 @@ app.post('/render', (req, res) => {
   catch (e) {
     return res.status(400).send({
       erorrMessage: 'An error occurred while parsing the template',
-      detail: e.stack
+      detail: e.message
 
     })
   }
