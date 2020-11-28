@@ -4,6 +4,7 @@
   "description": "A node.js web service that renders text templates with JavaScript inserts.",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "mocha *.test.js"
   },
   "type": "module",
