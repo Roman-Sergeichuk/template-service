@@ -44,30 +44,30 @@ const parseVariableString = (variable, query) => {
 
 export function parseTemplate (query) {
   const tmpl = query.template
-  let tmpltList = tmpl.split(PLACEHOLDERS)
-  let resList = []
+  let splittedTemplate = tmpl.split(PLACEHOLDERS)
+  let result = []
   let code = ''
-  for (let i = 0; i < tmpltList.length; i += 1) {
-    let codeString = CODE_REGEX.exec(tmpltList[i])
-    let substitutionString = VARIABLE_REGEX.exec(tmpltList[i])
+  for (let i = 0; i < splittedTemplate.length; i += 1) {
+    let codeString = CODE_REGEX.exec(splittedTemplate[i])
+    let substitutionString = VARIABLE_REGEX.exec(splittedTemplate[i])
     if (substitutionString) {
       code += substitutionString[1]
-      resList.push(parseVariableString(code, query))
+      result.push(parseVariableString(code, query))
       code = ''
     }
     else if (codeString) {
       code += codeString[1]
       if (code.endsWith('}')) {
-        resList.push(parseCodeString(code, query))
+        result.push(parseCodeString(code, query))
         code = ''
       }
     }
     else if (isUncomleted(code)) {
-      code = addString2Code(code, tmpltList[i])
+      code = addString2Code(code, splittedTemplate[i])
     }
     else {
-      addString2Result(resList, tmpltList[i])
+      addString2Result(result, splittedTemplate[i])
     }
   }
-  return resList.join('')
+  return result.join('')
 }
