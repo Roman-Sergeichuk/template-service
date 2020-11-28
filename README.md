@@ -24,6 +24,40 @@
 
     git clone https://github.com/Roman-Sergeichuk/template-service.git
 
-Активируйте виртуальное окружение и установите необходимые зависимости, выполнив команду:
+Установите необходимые зависимости, выполнив команду:
 
     npm install
+
+Запустите сервер, выполнив команду:
+
+    npm start
+
+## Запуск тестов
+
+Для запуска тестов используйте команду:
+
+    npm test
+
+## Пример использования приложения
+
+Для отправки запроса установите следующие параметры:
+
+- request method: POST;
+- URL: http://127.0.0.1:3000/render/;
+- Content-Type: application/json;
+
+В тело запроса поместите данные в следующем формате:
+
+    {
+    "template": "Hi I'm <?= name ?>. I'm <?= age ?>. My languages: <? for (let i = 0; i < languages.length; i++) { languages[i] } ?>",
+    "substitutions": {
+        "name": "Roman",
+        "age": "34",
+        "languages": ["russian", "english"]
+        }
+    }
+
+Ответ при успешной обработке:
+
+    HTTP-код: 200
+    {"result": "Hello Mr. Doe"}
