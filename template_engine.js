@@ -52,9 +52,9 @@ export function parseTemplate (query) {
   const splittedTemplate = template.split(PLACEHOLDERS)
   let result = []
   let code = ''
-  for (let i = 0; i < splittedTemplate.length; i += 1) {
-    let matchCode = CODE_REGEX.exec(splittedTemplate[i])
-    let matchVariable = VARIABLE_REGEX.exec(splittedTemplate[i])
+  splittedTemplate.forEach(templateElement => {
+    let matchCode = CODE_REGEX.exec(templateElement)
+    let matchVariable = VARIABLE_REGEX.exec(templateElement)
     if (matchVariable) {
       result.push(parseVariableString(matchVariable[1], query))
     }
@@ -66,11 +66,11 @@ export function parseTemplate (query) {
       }
     }
     else if (isUncomleted(code)) {
-      code = addString2Code(code, splittedTemplate[i])
+      code = addString2Code(code, templateElement)
     }
     else {
-      addString2Result(result, splittedTemplate[i])
+      addString2Result(result, templateElement)
     }
-  }
+  })
   return result.join('')
 }
