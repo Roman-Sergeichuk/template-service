@@ -59,5 +59,8 @@
 
 Ответ при успешной обработке:
 
-    HTTP-код: 200
-    {"result": "Hello Mr. Doe"}
+    status code: 200
+
+    {
+    "result": "Hi I'm Roman. I'm 34. My languages: russian, english"
+    }
