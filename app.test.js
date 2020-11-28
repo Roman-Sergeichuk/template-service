@@ -5,7 +5,7 @@ import { app } from './app.js'
 const request = supertest;
 
 describe('POST /render', function() {
-    it('Hello Mr. Doe', function(done) {
+    it('should parse if-else statement', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -25,7 +25,7 @@ describe('POST /render', function() {
   
 
   describe('POST /render', function() {
-    it('Iteration', function(done) {
+    it('should parse for loop', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -44,7 +44,7 @@ describe('POST /render', function() {
 
 
   describe('POST /render', function() {
-    it('Iteration + conditions + substitutions', function(done) {
+    it('should parse iteration + conditions + substitutions', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -64,7 +64,7 @@ describe('POST /render', function() {
 
 
   describe('POST /render', function() {
-    it('Substitutions + array iteration', function(done) {
+    it('should parse substitutions + array iteration', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -84,7 +84,7 @@ describe('POST /render', function() {
 
 
   describe('POST /render', function() {
-    it('No template', function(done) {
+    it('should send error message if no template', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -102,7 +102,7 @@ describe('POST /render', function() {
   }); 
 
   describe('POST /render', function() {
-    it('Parsing error', function(done) {
+    it('should send parsing error if substitution skipped', function(done) {
       request(app)
       .post('/render')
         .send({
@@ -122,29 +122,3 @@ describe('POST /render', function() {
         });
     });
   });
-
-// var app = express();
- 
-// app.get("/", function (request, response){
-     
-//     response.send("Hello Test");
-// });
- 
-// app.listen(3000);
- 
-
-
-
-// const request = supertest;
- 
-// // var app = require("./app").app;
- 
-// it("should return Hello Test", function(done){
-     
-//     request(app)
-//         .get("/")
-//         .expect("Hello Test")
-//         .end(done);
-// });
-
-
