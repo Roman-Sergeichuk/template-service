@@ -38,10 +38,12 @@ const parseCodeString = (code, query) => {
 
 
 const parseVariableString = (variable, query) => {
-    Object.entries(query.substitutions).forEach(([key, val]) => {
+  if (query.substitutions) {
+    Object.keys(query.substitutions).forEach(key => {
       variable = `let ${key} = query.substitutions.${key}; ${variable}`;
     });
-    return eval(variable)
+  }
+  return eval(variable)
 }
 
 
@@ -54,9 +56,7 @@ export function parseTemplate (query) {
     let matchCode = CODE_REGEX.exec(splittedTemplate[i])
     let matchVariable = VARIABLE_REGEX.exec(splittedTemplate[i])
     if (matchVariable) {
-      code += matchVariable[1]
-      result.push(parseVariableString(code, query))
-      code = ''
+      result.push(parseVariableString(matchVariable[1], query))
     }
     else if (matchCode) {
       code += matchCode[1]
