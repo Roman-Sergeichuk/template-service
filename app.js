@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express, { query } from 'express';
-import { parseQuery } from './template_engine.js';
+import { parseTemplate } from './template_engine.js';
 
 
 export const app = express();
@@ -16,7 +16,7 @@ app.post('/render', (req, res) => {
   }
 
   try {
-    const result = parseQuery(req.body)
+    const result = parseTemplate(req.body)
     return res.status(200).send({
       result: result
     })
