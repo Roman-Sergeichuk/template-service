@@ -21,9 +21,6 @@ describe("POST /render", function () {
         done();
       });
   });
-});
-
-describe("POST /render", function () {
   it("should parse for loop", function (done) {
     request(app)
       .post("/render")
@@ -39,9 +36,6 @@ describe("POST /render", function () {
         done();
       });
   });
-});
-
-describe("POST /render", function () {
   it("should parse iteration + conditions + substitutions", function (done) {
     request(app)
       .post("/render")
@@ -62,9 +56,6 @@ describe("POST /render", function () {
         done();
       });
   });
-});
-
-describe("POST /render", function () {
   it("should parse substitutions + array iteration", function (done) {
     request(app)
       .post("/render")
@@ -88,9 +79,6 @@ describe("POST /render", function () {
         done();
       });
   });
-});
-
-describe("POST /render", function () {
   it("should send error message if no template", function (done) {
     request(app)
       .post("/render")
@@ -110,9 +98,6 @@ describe("POST /render", function () {
         done();
       });
   });
-});
-
-describe("POST /render", function () {
   it("should send parsing error if substitution skipped", function (done) {
     request(app)
       .post("/render")
