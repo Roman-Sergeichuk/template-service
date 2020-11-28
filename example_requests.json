@@ -10,11 +10,14 @@
 
 
 {
-    "template": "<? for (let i = 0; i < 5; i++) { ?> line - <? + i } ?> Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name ?>",
-    "substitutions": {"last_name": "Doe", "gender": "male"}
-}
+    "template": "<? for (let i = 0; i < 5; i++) { ?> line - <? + i } ?> Hello <? if (gender === 'male') { ?>Mr.<? } else { ?>Mrs.<? } ?> <?= last_name ?>", 
+    "substitutions": {"last_name": "Doe", "gender": "male"}}
 
 {
-    "template": "Hi I'm <?= name ?>. I'm <?= age ?>. My languages: <? for (let i = 0; i < languages.length; i++) { languages[i] } ?>",
-    "substitutions": {"name": "Roman", "age": "34", "languages": ["russian", "english"]}
+    "template": "Hi I'm <?= name ?>. I'm <?= age ?>. My languages: <? for (let i = 0; i < languages.length; i++) { languages[i] } ?>", 
+    "substitutions": {
+        "name": "Roman", 
+        "age": "34", 
+        "languages": ["russian", "english"]
+        }
 }
