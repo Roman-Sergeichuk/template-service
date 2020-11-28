@@ -25,11 +25,11 @@ describe("POST /render", function () {
     request(app)
       .post("/render")
       .send({
-        template: "<? for (let i = 0; i < 5; i++) { ?> Gleb <? + i } ?>",
+        template: "<? for (let i = 0; i < 5; i++) { ?> Test <? + i } ?>",
       })
       .set("Accept", "application/json")
       .expect("Content-Type", /json/)
-      .expect({ result: " Gleb 0,  Gleb 1,  Gleb 2,  Gleb 3,  Gleb 4" })
+      .expect({ result: " Test 0,  Test 1,  Test 2,  Test 3,  Test 4" })
       .expect(200)
       .end(function (err, res) {
         if (err) return done(err);
