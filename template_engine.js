@@ -1,18 +1,9 @@
 const codeRegex = /<\? ([^\?>]+)? \?>/g;
-const variableRegex = /<\?= ([^\?>]+)? \?>/g;
-const placeholders = /(<\?[^\?>]+? \?>)/g;
+const substitutionRegex = /<\?= ([^\?>]+)? \?>/g;
+const placeholders = /(<\?[ |=][^\?>]+? \?>)/g;
 
 const isUncomleted = (code) => {
   return code && !code.endsWith("}");
-};
-
-const addString2Code = (code, string) => {
-  code += `"${string}"`;
-  return code;
-};
-
-const addString2Result = (result, string) => {
-  return result.push(string);
 };
 
 const parseCodeString = (code, query) => {
@@ -33,16 +24,16 @@ const parseCodeString = (code, query) => {
   return eval(code);
 };
 
-const parseVariableString = (variable, query) => {
+const parseSubstitutionString = (substitution, query) => {
   if (query.substitutions) {
     Object.keys(query.substitutions).forEach((key) => {
-      variable = `
+      substitution = `
                   let ${key} = query.substitutions.${key}; 
-                  ${variable}
+                  ${substitution}
                  `;
     });
   }
-  return eval(variable);
+  return eval(substitution);
 };
 
 export function parseTemplate(query) {
@@ -52,19 +43,24 @@ export function parseTemplate(query) {
   let code = "";
   splittedTemplate.forEach((templateElement) => {
     let matchCode = codeRegex.exec(templateElement);
-    let matchVariable = variableRegex.exec(templateElement);
-    if (matchVariable) {
-      result.push(parseVariableString(matchVariable[1], query));
+    let matchSubstitution = substitutionRegex.exec(templateElement);
+    if (matchSubstitution) {
+      const substitutionVal = parseSubstitutionString(
+        matchSubstitution[1],
+        query
+      );
+      result.push(substitutionVal);
     } else if (matchCode) {
       code += matchCode[1];
       if (code.endsWith("}")) {
-        result.push(parseCodeString(code, query));
+        const codeResult = parseCodeString(code, query);
+        result.push(codeResult);
         code = "";
       }
     } else if (isUncomleted(code)) {
-      code = addString2Code(code, templateElement);
+      code += `"${templateElement}"`;
     } else {
-      addString2Result(result, templateElement);
+      result.push(templateElement);
     }
   });
   return result.join("");
