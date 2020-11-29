@@ -14,7 +14,8 @@
     "substitutions": {"last_name": "Doe", "gender": "male"}}
 
 {
-    "template": "Hi I'm <?= name ?>. I'm <?= age ?>. My languages: <? for (let i = 0; i < languages.length; i++) { languages[i] } ?>", 
+    "template": "Hi I'm <?= name ?>. I'm <?= age ?>. 
+    My languages: <? for (let i = 0; i < languages.length; i++) { languages[i] } ?>", 
     "substitutions": {
         "name": "Roman", 
         "age": "34", 
