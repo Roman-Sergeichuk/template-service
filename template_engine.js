@@ -25,15 +25,7 @@ const parseCodeString = (code, query) => {
 };
 
 const parseSubstitutionString = (substitution, query) => {
-  if (query.substitutions) {
-    Object.keys(query.substitutions).forEach((key) => {
-      substitution = `
-                  let ${key} = query.substitutions.${key}; 
-                  ${substitution}
-                 `;
-    });
-  }
-  return eval(substitution);
+  return eval(`query.substitutions.${substitution}`);
 };
 
 export function parseTemplate(query) {
